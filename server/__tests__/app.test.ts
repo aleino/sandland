@@ -11,4 +11,9 @@ describe("App root endpoint", () => {
     const result = await request(app).get("/");
     expect(result.header["access-control-allow-origin"]).toBe("*");
   });
+
+  it("Should not have x-powered-by header", async () => {
+    const result = await request(app).get("/");
+    expect(result.header["x-powered-by"]).toBeUndefined();
+  });
 });
