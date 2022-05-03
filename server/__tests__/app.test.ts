@@ -6,4 +6,9 @@ describe("App root endpoint", () => {
     const result = await request(app).get("/");
     expect(result.status).toBe(200);
   });
+
+  it("Should have CORS * header", async () => {
+    const result = await request(app).get("/");
+    expect(result.header["access-control-allow-origin"]).toBe("*");
+  });
 });
