@@ -4,15 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { StoreProvider } from "easy-peasy";
+import store from "./store";
 import { ChakraProvider } from "@chakra-ui/react";
+
+// https://github.com/ctrlplusb/easy-peasy/issues/741
+const StoreProviderOverride = StoreProvider as any;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <ChakraProvider>
-      <App />
+      <StoreProviderOverride store={store}>
+        <App />
+      </StoreProviderOverride>
     </ChakraProvider>
   </React.StrictMode>
 );
