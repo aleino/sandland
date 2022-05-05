@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
+
 import Logo from "./Logo";
+import TemperatureSelector from "./TemperatureSelector";
 
 const Sidebar = () => {
   return (
@@ -8,6 +10,7 @@ const Sidebar = () => {
       <Logo />
       <Box p={4}>
         <Text fontSize={"xl"}>Sidebar</Text>
+        <TemperatureSelector />
       </Box>
     </Box>
   );
