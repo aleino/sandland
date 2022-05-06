@@ -11,6 +11,13 @@ import {
   layout,
 } from "./helpers";
 
+// With React Create App Mapbox does not build without this.
+// https://github.com/mapbox/mapbox-gl-js/issues/10173
+// prettier-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const Map = () => {
   // Get and modify data shown on the map
   const measurements = useStoreState((state) => state.measurements.data);
