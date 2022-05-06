@@ -13,7 +13,7 @@ const TemperatureSelector = () => {
   };
   const units = Object.values(TemperatureUnit);
   return (
-    <Box mt={4}>
+    <Box mt={4} mb={8}>
       <FormLabel fontSize={"sm"}>Temperature unit</FormLabel>
       <Select onChange={(e) => handleChange(e)}>
         {units.map((unit) => (
