@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Select, FormLabel } from "@chakra-ui/react";
+import { Box, Select } from "@chakra-ui/react";
 
 import { useStoreActions } from "../store";
 import { TemperatureUnit } from "../types";
@@ -14,7 +14,6 @@ const TemperatureSelector = () => {
   const units = Object.values(TemperatureUnit);
   return (
     <Box mt={4} mb={8}>
-      <FormLabel fontSize={"sm"}>Temperature unit</FormLabel>
       <Select onChange={(e) => handleChange(e)}>
         {units.map((unit) => (
           <option value={unit} key={unit}>
