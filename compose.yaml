@@ -1,0 +1,13 @@
+services:
+  sandland-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: sandland-server
+    image: sandland-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+    ports:
+      - "5000:5000"
