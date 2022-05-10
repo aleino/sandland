@@ -1,5 +1,7 @@
 import { Measurement } from "../../../lib/shared/types";
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
+import config from "../config";
+
+const BASE_URL = config.API_BASE_URL;
 
 const fetchAll = async () => {
   const response = await fetch(`${BASE_URL}/measurements`);
