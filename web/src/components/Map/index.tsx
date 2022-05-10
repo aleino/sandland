@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import mapboxgl, { GeoJSONSource } from "mapbox-gl";
 
+import config from "../../config";
+
 import { useStoreState } from "../../store";
 import { getMeasurementsWithUserPreferences } from "../../utils/measurements";
 import {
@@ -41,7 +43,7 @@ const Map = () => {
     // Draw Initial Map
     if (map.current || !mapContainer.current) return;
     map.current = new mapboxgl.Map({
-      accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
+      accessToken: config.MAPBOX_ACCESS_TOKEN,
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/light-v10",
       center: initialCenter,
