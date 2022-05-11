@@ -1,0 +1,33 @@
+FROM node:16-alpine AS deps
+
+# Node modules
+WORKDIR /app
+COPY web/package.json web/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+# Buid
+FROM node:16-alpine AS builder
+ARG REACT_APP_MAPBOX_ACCESS_TOKEN
+
+WORKDIR /app
+
+COPY web/ ./web
+COPY lib/ ./lib
+COPY --from=deps /app/node_modules ./node_modules
+
+RUN cd web \
+    REACT_APP_MAPBOX_ACCESS_TOKEN=${REACT_APP_MAPBOX_ACCESS_TOKEN} yarn build
+
+
+# Prod container
+FROM node:16-alpine AS prod
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/web/build/ ./
+RUN npm install -g http-server 
+
+EXPOSE 3000
+
+CMD ["http-server", "-p", "3000"]
