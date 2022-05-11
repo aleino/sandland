@@ -9,15 +9,28 @@ AWS CloudFormation templates and configurations for Sandland infra.
 - Publicly accessible AWS Load Balanced Fargate Service.
 - Used AWS regions: `eu-west-1`.
 
+## Dependencies
+
+- Application stack depends on *AWS Route53 Hosted Zone* defined in `aleino-infra` repo. If you have access to `sandland` AWS account, you should be able to access these resources.
+
 ## Requirements
 
 - Access to `sandland` AWS account.
-- AWS Cloud Development Kit V2.
+- [AWS Cloud Development Kit V2](https://docs.aws.amazon.com/cdk/v2/guide/home.html).
 
-You can install [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) V2 with NPM.
+You can install [AWS Cloud Development Kit V2](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) with NPM:
 
 ```sh
 npm install -g aws-cdk-lib
+```
+
+### Env variables
+
+Depending on your deployment target AWS `account` and `region`, you need to set following environment variables.
+
+```sh
+export SANDLAND_AWS_ACCOUNT=<target AWS account>
+export SANDLAND_AWS_REGION=<target AWS region>
 ```
 
 ## Develop
@@ -26,13 +39,13 @@ npm install -g aws-cdk-lib
 
 [AWS CDK V2 API Reference](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-construct-library.html)
 
-Check that your code is valid CloudFormation:
+To check that your code is valid CloudFormation, run:
 
 ```sh
 cdk synth
 ```
 
-Compare deployed stack with current state:
+To compare deployed stack with current state, run:
 
 ```sh
 cdk diff
