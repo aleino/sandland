@@ -2,6 +2,9 @@ import { IgnoreMode, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
+import * as route53 from "aws-cdk-lib/aws-route53";
+import * as route53_targets from "aws-cdk-lib/aws-route53-targets";
+import * as certificate_manager from "aws-cdk-lib/aws-certificatemanager";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import * as path from "path";
@@ -79,6 +82,21 @@ export class SandlandStack extends Stack {
     );
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(appPort));
 
+    // SSL Certificate
+    const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
+      domainName: "leino.io",
+    });
+
+    const certificate = new certificate_manager.Certificate(
+      this,
+      "Certificate",
+      {
+        domainName: "*.leino.io",
+        validation:
+          certificate_manager.CertificateValidation.fromDns(hostedZone),
+      }
+    );
+
     // Fargate
     const fargateService =
       new ecs_patterns.ApplicationLoadBalancedFargateService(
@@ -92,7 +110,17 @@ export class SandlandStack extends Stack {
           memoryLimitMiB: 512,
           taskDefinition,
           securityGroups: [securityGroup],
+          certificate,
         }
       );
+
+    // Custom subdomains
+    new route53.ARecord(this, "ARecord", {
+      recordName: "sandland-api",
+      zone: hostedZone,
+      target: route53.RecordTarget.fromAlias(
+        new route53_targets.LoadBalancerTarget(fargateService.loadBalancer)
+      ),
+    });
   }
 }
