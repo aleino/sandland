@@ -1,0 +1,11 @@
+{
+  "availability-zones:account=729513806876:region=eu-west-1": [
+    "eu-west-1a",
+    "eu-west-1b",
+    "eu-west-1c"
+  ],
+  "hosted-zone:account=729513806876:domainName=leino.io:region=eu-west-1": {
+    "Id": "/hostedzone/Z00132112O224GZULZHOM",
+    "Name": "leino.io."
+  }
+}
