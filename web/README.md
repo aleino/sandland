@@ -1,46 +1,80 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sandland web application
 
-## Available Scripts
+React based public web application for Sandland.
 
-In the project directory, you can run:
+Live demo available at: [sandland.leino.io](sandland.leino.io)
 
-### `npm start`
+## Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [React](https://reactjs.org/)
+- [Chakra UI](https://chakra-ui.com/). Modular and easy-to-use UI framework. No CSS needed.
+- [EasyPeasy](https://easy-peasy.vercel.app/) for state management. Uses Redux under the hood.
+- [Mapbox GL JS](https://www.mapbox.com/) for WebGL based maps.
+- [React Create App](https://create-react-app.dev/) for the boilerplate.
+- [Yarn](https://yarnpkg.com/) for package management.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Requirements
 
-### `npm test`
+- **Mapbox access token**. Create a free  [Mapbox](https://www.mapbox.com) account. You can find the access token on your profile page.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Set the access token as an env variable:
 
-### `npm run build`
+```sh
+export REACT_APP_MAPBOX_ACCESS_TOKEN=<your access token>
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Run `prod` server locally
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To run build and run the service locally in `prod` env, run the following command:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+cd ..
+docker compose build web && docker up web
+```
 
-### `npm run eject`
+## Install
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To install needed dependencies, run the following command:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+yarn install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Run
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To run the service, run the following command:
 
-## Learn More
+```sh
+yarn start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This will start the development server on [localhost:3000](https://localhost:3000) and open the browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Hot reloading is enabled so you can edit the code and see the changes immediately. You only need to restart the server when you make changes to `package.json`.
+
+## Build
+
+To build the application, run the following command:
+
+```sh
+yarn build
+```
+
+This will build the application in `./build/`.
+
+You can serve the application files with your favorite HTTP server (for example [http-server](https://www.npmjs.com/package/http-server)).
+
+## Deploy
+
+Pushes to GitHub `dev` branch are automatically deployed to [sandland.leino.io](https://sandland.leino.io) (alias for [aleino-sandland-dev.netlify.app/](https://aleino-sandland-dev.netlify.app/)) via [Netlify](https://www.netlify.com/).
+
+There are no infrastructure or deployment configurations in source control but you can manage deployments via Netlify console.
+
+## DNS
+
+`CNAME` record for the domain `sandland.leino.io` is configured  in the `/infra` directory.
+
+## SLL Cert
+
+Netlify creates and automatically renews a valid SSL certificate for the domain `sandland.leino.io` with *LetsEncrypt*.
