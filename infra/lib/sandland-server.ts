@@ -122,5 +122,12 @@ export class SandlandStack extends Stack {
         new route53_targets.LoadBalancerTarget(fargateService.loadBalancer)
       ),
     });
+
+    const frontendDomainName = "aleino-sandland-dev.netlify.app";
+    new route53.CnameRecord(this, "FrontendCName", {
+      recordName: "sandland",
+      zone: hostedZone,
+      domainName: frontendDomainName,
+    });
   }
 }
